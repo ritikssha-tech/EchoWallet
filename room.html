@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Room - Echo-Wallet</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/uuid@9.0.1/dist/umd/uuid.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="room-page">
+            <!-- Navigation -->
+            <div class="room-navigation">
+                <button id="backBtn" class="back-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    Back to Home
+                </button>
+                <a href="history.html" class="history-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 3v18h18"></path>
+                        <path d="M18 7v10"></path>
+                        <path d="M12 11v6"></path>
+                        <path d="M6 13v4"></path>
+                    </svg>
+                    History
+                </a>
+            </div>
+
+            <!-- Room Header -->
+            <div id="roomHeader" class="glass-card">
+                <div class="room-header-content">
+                    <div>
+                        <h1 id="roomTitle">Expense Room</h1>
+                        <p class="room-subtitle">Share this link with your friends</p>
+                    </div>
+                    <button id="copyBtn" class="btn-primary">
+                        <svg id="copyIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        <span id="copyText">Copy Link</span>
+                    </button>
+                </div>
+                <div class="room-url-box">
+                    <p id="roomUrl" class="room-url"></p>
+                </div>
+            </div>
+
+            <!-- Manage People -->
+            <div id="peopleContainer" class="glass-card">
+                <div class="people-header">
+                    <h2>People</h2>
+                    <button id="addPersonBtn" class="btn-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Add Person
+                    </button>
+                </div>
+                <div id="peopleList" class="people-list"></div>
+                <div id="addPersonForm" class="add-person-form" style="display: none;">
+                    <input type="text" id="newPersonName" placeholder="Enter person name" maxlength="50">
+                    <div class="form-actions">
+                        <button type="button" id="savePersonBtn" class="btn-primary btn-small">Add</button>
+                        <button type="button" id="cancelPersonBtn" class="btn-secondary btn-small">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Expense Form -->
+            <div id="expenseFormContainer" class="glass-card">
+                <h2>Add Expense</h2>
+                <form id="expenseForm">
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" id="expenseDescription" placeholder="e.g., Dinner at restaurant" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Amount (₹)</label>
+                            <input type="number" id="expenseAmount" placeholder="0.00" step="0.01" min="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Paid By</label>
+                            <select id="expensePaidBy" required></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="split-header">
+                            <label>Split Between</label>
+                            <div class="split-actions">
+                                <button type="button" id="selectAllBtn" class="link-button">Select All</button>
+                                <span class="divider">|</span>
+                                <button type="button" id="clearAllBtn" class="link-button">Clear</button>
+                            </div>
+                        </div>
+                        <div id="splitButtons" class="split-buttons"></div>
+                    </div>
+                    <button type="submit" class="btn-primary btn-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Add Expense
+                    </button>
+                </form>
+            </div>
+
+            <!-- Expense List -->
+            <div id="expenseListContainer" class="glass-card" style="display: none;">
+                <h2>Expenses</h2>
+                <div id="expenseList"></div>
+            </div>
+
+            <!-- Debt Settlement -->
+            <div id="debtSettlementContainer" class="glass-card" style="display: none;">
+                <h2>Simplified Settlements</h2>
+                <p class="debt-subtitle">Minimum transactions needed to settle all debts:</p>
+                <div id="debtList"></div>
+                <div class="info-box">
+                    <p>💡 This algorithm minimizes the number of transactions needed to settle all debts.</p>
+                </div>
+            </div>
+
+            <!-- Toast Notification -->
+            <div id="toast" class="toast"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="room.js"></script>
+</body>
+</html>

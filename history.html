@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense History - Echo-Wallet</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/uuid@9.0.1/dist/umd/uuid.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="history-page">
+            <!-- Header -->
+            <div class="history-header">
+                <button id="backBtn" class="back-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    Back to Home
+                </button>
+                <h1>Expense History</h1>
+                <p class="history-subtitle">View all your expense rooms and track your spending over time</p>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon purple">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path>
+                            <path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path>
+                            <path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalRooms">0</h3>
+                        <p>Total Rooms</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon pink">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalExpenses">0</h3>
+                        <p>Total Expenses</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalAmount">₹0.00</h3>
+                        <p>Total Spent</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Storage Info -->
+            <div class="glass-card storage-info">
+                <div class="storage-header">
+                    <h3>Local Storage</h3>
+                    <button id="clearStorageBtn" class="btn-danger btn-small">Clear All Data</button>
+                </div>
+                <div class="storage-details">
+                    <p>Storage used: <span id="storageUsed">0 KB</span></p>
+                    <p class="storage-note">All your data is stored locally in your browser. Clearing data will remove all rooms and expenses.</p>
+                </div>
+            </div>
+
+            <!-- Rooms List -->
+            <div class="rooms-section">
+                <h2>Your Rooms</h2>
+                <div id="roomsList" class="rooms-list">
+                    <div class="loading-state">
+                        <div class="loading-spinner"></div>
+                        <p>Loading rooms...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <div class="empty-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path>
+                        <path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path>
+                        <path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path>
+                    </svg>
+                </div>
+                <h3>No Rooms Yet</h3>
+                <p>Create your first expense room to start tracking!</p>
+                <a href="index.html" class="btn-primary">Create Room</a>
+            </div>
+            <!-- Toast Notification -->
+            <div id="toast" class="toast"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="history.js"></script>
+</body>
+</html>
